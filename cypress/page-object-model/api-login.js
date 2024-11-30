@@ -1,5 +1,10 @@
 export class ApiLogin {
   loginResponse = null;
+  /**
+   * Perform a POST request to the Reqres login API with
+   * invalid credentials and store the response for later use.
+   * @returns {Cypress.Chainable<null>}
+   */
   apiLogin() {
     cy.request({
       method: "POST",

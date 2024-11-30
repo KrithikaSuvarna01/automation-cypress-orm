@@ -1,27 +1,15 @@
 import credentials from "../fixtures/login-credentials.json";
-import { loginToApp } from "../support/login-page";
+import { loginToApp } from "../page-object-model/login-page";
 
 describe("Login Flow Tests", () => {
-  const testCases = [
-    {
-      scenario: "valid credentials",
-      credentials: credentials.valid,
-      isValid: true,
-    },
-    {
-      scenario: "invalid credentials",
-      credentials: credentials.invalid,
-      isValid: false,
-    },
-  ];
-
-  testCases.forEach(({ scenario, credentials, isValid }) => {
+  credentials.forEach(({ username, password }) => {
     it(`should ${
-      isValid ? "successfully" : "fail to"
-    } login with ${scenario}`, () => {
-      const { username, password } = credentials;
+      username === "Admin" && password === "admin123"
+        ? "successfully"
+        : "fail to"
+    } login`, () => {
       loginToApp.loginToApp(username, password);
-      loginToApp.verifyLogin(isValid);
+      loginToApp.verifyLogin(username, password);
     });
   });
 });
