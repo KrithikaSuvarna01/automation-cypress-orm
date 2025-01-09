@@ -4,6 +4,8 @@ import { HandHygieneSensorsPage } from "../page-object-model/hand-hygine-sensor"
 import { LoginPage } from "../page-object-model/login-page";
 import { SensorsPage } from "../page-object-model/sensors";
 import { sensorDatas } from "../fixtures/sensor-data";
+import { GatewayPage } from "../page-object-model/gateway-management";
+import { gatewayDatas } from "../fixtures/gateway-data";
 
 describe("template spec", () => {
   beforeEach(() => {
@@ -13,7 +15,7 @@ describe("template spec", () => {
     LoginPage.verifySuccessfulLogin(loginPagData.email, loginPagData.password);
   });
 
-  it.only("Should add multiple hand hygiene sensors", () => {
+  it("Should add multiple hand hygiene sensors", () => {
     HandHygieneSensorsPage.visitDeviceManagement();
     HandHygieneSensorsPage.openHHSensorTab();
 
@@ -28,6 +30,15 @@ describe("template spec", () => {
       SensorsPage.addSensor(sensorData);
       SensorsPage.searchSensor(sensorData.sensorId);
       SensorsPage.deleteSensor();
+    });
+  });
+
+  it.only("Should Create Gateway unassign them and delete them", () => {
+    HandHygieneSensorsPage.visitDeviceManagement();
+    GatewayPage.openGatewayTab();
+    gatewayDatas.forEach((gatewayData) => {
+      GatewayPage.createGateway(gatewayData);
+      GatewayPage.unassignAnddeleteGateway(gatewayData.SIDLabel);
     });
   });
 });
